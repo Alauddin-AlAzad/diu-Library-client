@@ -4,6 +4,12 @@ import { Menu, X, Bell, MessageCircle, Sun, User, Settings, LogOut } from "lucid
 import { Link } from "react-router"
 
 const Navbar = () => {
+    const links=<>
+    <Link to='/' className="hover:text-primary cursor-pointer">Home</Link>
+                    <Link to='/allbook' className="hover:text-primary cursor-pointer">All Book</Link>
+                    <Link className="hover:text-primary cursor-pointer"> Add Books</Link>
+                    <Link className="hover:text-primary cursor-pointer">Borrowed Book</Link>
+    </>
     return (
         <div className="navbar bg-base-100 shadow-sm px-4  sticky top-0 z-50">
 
@@ -35,9 +41,7 @@ const Navbar = () => {
 
                         {/* Menu */}
                         <ul className="menu w-full text-base font-medium gap-1">
-                            <Link><a className="active">Dashboard</a></Link>
-                            <Link><a>Home</a></Link>
-                            <Link><a>My Courses</a></Link>
+                          {links}
                         </ul>
                     </div>
                 </div>
@@ -45,13 +49,10 @@ const Navbar = () => {
 
             {/* DESKTOP LEFT */}
             <div className="hidden md:flex items-center gap-6 flex-1">
-                <img src={logo} alt="logo" className="w-40 h-12 object-contain" />
+                <img src={logo} alt="logo" className="lg:w-40 lg:h-12 md:w-20 md:h-6 object-contain" />
 
-                <ul className="flex gap-4 font-medium">
-                    <Link to='/' className="hover:text-primary cursor-pointer">Home</Link>
-                    <Link to='/allbook' className="hover:text-primary cursor-pointer">All Book</Link>
-                    <Link className="hover:text-primary cursor-pointer">Books</Link>
-                    <Link className="hover:text-primary cursor-pointer">About</Link>
+                <ul className="flex md:text-[10px] lg:text-[14px] gap-4 font-medium">
+                    {links}
                 </ul>
             </div>
 
@@ -77,37 +78,11 @@ const Navbar = () => {
 
                 {/* Profile */}
                 <div className="dropdown dropdown-end gap-2  ">
-                    <div tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                        <div className="w-10 rounded-full">
-                            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-                        </div>
-                    </div>
-                    <ul
-                        tabIndex={0}
-                        className="menu menu-sm dropdown-content mt-3 w-52 bg-base-100 rounded-box shadow"
-                    >
-                        <Link>
-                            <a className="flex items-center py-3 ">
-                                <User size={18} />
-                                Profile
-                            </a>
-                        </Link>
-
-                        <Link>
-                            <a className="flex items-center py-3 ">
-                                <Settings size={18} />
-                                Settings
-                            </a>
-                        </Link>
-
-                        <Link>
-                            <a className="flex items-center  text-red-500">
-                                <LogOut size={18} />
-                                Logout
-                            </a>
-                        </Link>
-
-                    </ul>
+                    
+    
+                        <Link to='register'>Register</Link>
+        
+                    
                 </div>
 
                 {/* Dark / Linkght */}
