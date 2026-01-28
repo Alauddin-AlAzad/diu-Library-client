@@ -1,14 +1,26 @@
-import React from "react"
+import React, { useContext } from "react"
 import logo from "../assets/Library_logo.png"
 import { Menu, X, Bell, MessageCircle, Sun, User, Settings, LogOut } from "lucide-react"
 import { Link } from "react-router"
+import AuthContext from "../Context/AuthContext"
 
 const Navbar = () => {
-    const links=<>
-    <Link to='/' className="hover:text-primary cursor-pointer">Home</Link>
-                    <Link to='/allbook' className="hover:text-primary cursor-pointer">All Book</Link>
-                    <Link className="hover:text-primary cursor-pointer"> Add Books</Link>
-                    <Link className="hover:text-primary cursor-pointer">Borrowed Book</Link>
+    const { user,  signOutUser } = useContext(AuthContext)
+
+    const handleSignOut=()=>{
+          signOutUser()
+        .then(result=>{
+            console.log('Sign out succesfully',result)
+        })
+        .catch(err=>{
+            console.log(err.message)
+        })
+    }
+    const links = <>
+        <Link to='/' className="hover:text-primary cursor-pointer">Home</Link>
+        <Link to='/allbook' className="hover:text-primary cursor-pointer">All Book</Link>
+        <Link className="hover:text-primary cursor-pointer"> Add Books</Link>
+        <Link className="hover:text-primary cursor-pointer">Borrowed Book</Link>
     </>
     return (
         <div className="navbar bg-base-100 shadow-sm px-4  sticky top-0 z-50">
@@ -41,7 +53,7 @@ const Navbar = () => {
 
                         {/* Menu */}
                         <ul className="menu w-full text-base font-medium gap-1">
-                          {links}
+                            {links}
                         </ul>
                     </div>
                 </div>
@@ -57,13 +69,13 @@ const Navbar = () => {
             </div>
 
             {/*  RIGHT SECTION */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
 
                 {/* Search */}
                 <input
                     type="text"
                     placeholder="Search"
-                    className="input input-bordered w-24 sm:w-40 md:w-48"
+                    className="input input-bordered w-20 sm:w-30 md:w-48"
                 />
 
                 {/* Notification */}
@@ -78,11 +90,55 @@ const Navbar = () => {
 
                 {/* Profile */}
                 <div className="dropdown dropdown-end gap-2  ">
-                    
-    
-                        <Link to='register'>Register</Link>
-        
-                    
+
+
+                    {
+                        user ? <>
+                            <div className="dropdown dropdown-end gap-2  ">
+                                <div tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                                    <div className="w-10 rounded-full">
+                                        <img src={user?.photoUrl} />
+                                    </div>
+                                </div>
+                                <ul
+                                    tabIndex={0}
+                                    className="menu menu-sm dropdown-content mt-3 w-52 bg-base-100 rounded-box shadow"
+                                >
+                                    <Link>
+                                        <button className="flex items-center py-3 ">
+                                            <User size={18} />
+                                            Profile
+                                        </button>
+                                    </Link>
+
+                                    <Link>
+                                        <button className="flex items-center py-3 ">
+                                            <Settings size={18} />
+                                            Settings
+                                        </button>
+                                    </Link>
+
+                                    <Link >
+                                        <button onClick={handleSignOut} className="flex items-center  text-red-500">
+                                            <LogOut size={18} />
+                                            Logout
+                                        </button>
+                                    </Link>
+
+                                </ul>
+                            </div>
+
+                        </> : <>
+                            <div className="flex flex-row gap-2 ">
+                                <Link className="btn bg-white border border-[#0051f9] text-[#0051f9]" to='/login'>Login</Link>
+                                <Link to='/register' > <button className="btn hidden lg:block text-center bg-white border border-[#0051f9] text-[#0051f9] " to='/register'>
+                                    Register
+                                </button></Link>
+                            </div>
+                        </>
+                    }
+
+
                 </div>
 
                 {/* Dark / Linkght */}

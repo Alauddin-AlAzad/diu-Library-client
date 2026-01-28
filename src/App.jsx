@@ -5,6 +5,7 @@ import Dashboard from "./pages/Allbook"
 import Allbook from "./pages/Allbook"
 import ErrorPage from "./pages/ErrorPage"
 import Register from "./pages/Register"
+import Login from "./pages/Login"
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/allbook" element={<Allbook></Allbook>}></Route>
         </Route>
         <Route path="register" element={<Register></Register>}></Route>
+        <Route path="login" element={<Login></Login>}></Route>
 
       </Routes>
     </>
