@@ -20,10 +20,10 @@ const TabCategories = () => {
 
                 <div className='flex justify-center mb-6'>
                     <TabList>
-                        <Tab>Programming</Tab>
-                        <Tab>Science</Tab>
-                        <Tab>History</Tab>
                         <Tab>Novel</Tab>
+                        <Tab>Thriller</Tab>
+                        <Tab>History</Tab>
+                        <Tab>Science</Tab>
                     </TabList>
                 </div>
 
