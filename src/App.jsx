@@ -7,6 +7,7 @@ import ErrorPage from "./pages/ErrorPage"
 import Register from "./pages/Register"
 import Login from "./pages/Login"
 import BookDetails from "./pages/BookDetails"
+import Addbook from "./pages/Addbook"
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Route index element={<Home></Home>}></Route>
           <Route path="/allbook" element={<Allbook></Allbook>}></Route>
           <Route path="/bookdetails" element={<BookDetails></BookDetails>}></Route>
+          <Route path="/addbook" element={<Addbook></Addbook>}></Route>
         </Route>
         <Route path="register" element={<Register></Register>}></Route>
         <Route path="login" element={<Login></Login>}></Route>

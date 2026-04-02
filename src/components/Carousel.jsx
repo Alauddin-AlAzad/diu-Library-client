@@ -9,7 +9,7 @@ import bgimg1 from '../assets/bg-1.jpg';
 import bgimg2 from '../assets/bg-2.jpg';
 import bgimg3 from '../assets/bg-3.jpg';
 import Slider from './Slider';
-import { label } from 'framer-motion/client';
+
 
 export default function Carousel() {
   const [activeIndex, setActiveIndex] = useState(0);

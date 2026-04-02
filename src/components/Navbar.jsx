@@ -19,8 +19,8 @@ const Navbar = () => {
     const links = <>
         <Link to='/' className="hover:text-primary cursor-pointer">Home</Link>
         <Link to='/allbook' className="hover:text-primary cursor-pointer">All Book</Link>
-        <Link className="hover:text-primary cursor-pointer"> Add Books</Link>
-        <Link className="hover:text-primary cursor-pointer">Borrowed Book</Link>
+        <Link to='/addbook' className="hover:text-primary cursor-pointer"> Add Books</Link>
+        <Link to='/browwedbook' className="hover:text-primary cursor-pointer">Borrowed Book</Link>
     </>
     return (
         <div className="navbar bg-base-100 shadow-sm px-4  sticky top-0 z-50">
