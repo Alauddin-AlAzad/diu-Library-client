@@ -1,11 +1,14 @@
 import axios from 'axios';
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { MdOutlineAddBox } from "react-icons/md";
-
+import AuthContext from '../Context/AuthContext';
+import { toast } from 'react-hot-toast'
+import { useNavigate } from 'react-router';
 const Addbook = () => {
+    const navigate = useNavigate();
+    const { user } = useContext(AuthContext)
     const formRef = useRef(null);
     const [imagePreview, setImagePreview] = useState(null);
-
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -15,11 +18,11 @@ const Addbook = () => {
         }
     };
 
-    const handleSave = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault(); // prevent default form submission
 
         const form = formRef.current;
-
+        const email = user?.email;
         const bookName = form.bookName.value;
         const authorName = form.authorName.value;
         const description = form.description.value;
@@ -34,25 +37,43 @@ const Addbook = () => {
         data.append('file', imageFile)
         data.append("upload_preset", "adddd_it")
         data.append("cloud_name", "dvqec4cx5")
-        const res = await axios.post(`https://api.cloudinary.com/v1_1/dvqec4cx5/image/upload`,data)
-         const uploadedImage= res.data;
+        const res = await axios.post(`https://api.cloudinary.com/v1_1/dvqec4cx5/image/upload`, data)
+        const uploadedImage = res.data;
+        const imgUrl = uploadedImage?.secure_url;
+        const formData = {
 
-         console.log("here image url",uploadedImage)
- 
-        console.log("Book Name:", bookName);
-        console.log("Author Name:", authorName);
-        console.log("Description:", description);
-        console.log("Quantity:", quantity);
-        console.log("Rating:", rating);
-        console.log("Content:", content);
-        console.log("Category:", category);
-        console.log("Image File:", imageFile);
+            bookName,
+            authorName,
+            description,
+            quantity,
+            rating,
+            content,
+            category,
+            imgUrl,
+            owner: {
+                email
 
-        alert("Check console for form data!");
+            },
+
+
+        }
+        console.log(formData)
+        // console.log("Image File:", imageFile);
+        //   here we use post method
+        //    make a post request 
+        try {
+            axios.post(`${import.meta.env.VITE_API_URL}/add-job`, formData)
+            form.reset()
+            toast.success('Book added Succesfully');
+           
+        } catch (err) {
+            console.log(err)
+            toast.error('Something went wrong')
+        }
     };
 
     return (
-        <form ref={formRef} onSubmit={handleSave} className='container mx-auto px-2 my-5 lg:my-8'>
+        <form ref={formRef} onSubmit={handleSubmit} className='container mx-auto px-2 my-5 lg:my-8'>
 
             {/* Header */}
             <div className='flex items-center justify-between'>
@@ -62,18 +83,18 @@ const Addbook = () => {
                 </div>
 
                 <div className='flex items-center gap-2'>
-                    <button type="button" className='text-xs border border-gray-300 px-3 py-1 rounded hover:bg-gray-100 transition'>
+                    <button type="button" className='text-xs border border-gray-300 px-3 py-1 rounded  hover:bg-gray-100 transition'>
                         Save As Draft
                     </button>
 
-                    <button type="submit" className='text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded transition'>
+                    <button type="submit" className='text-xs bg-[#1E4E8C] hover:bg-blue-700 text-white px-3 py-1 rounded transition'>
                         Add Books
                     </button>
                 </div>
             </div>
 
             {/* Section 1 */}
-            <div className='grid grid-cols-8 items-start lg:items-stretch gap-4 my-5 bg-[#F7F9FC] p-4 rounded-xl'>
+            <div className='grid grid-cols-8 items-start lg:items-stretch gap-4 my-5 bg-[#F0F6FF] border border-[#2F6FB2]/20 p-4 rounded-xl'>
                 {/* Left */}
                 <div className='col-span-5 border border-gray-200 rounded-xl p-4 shadow-sm bg-white'>
                     <h2 className='text-lg font-semibold mb-3'>General Information</h2>
@@ -92,7 +113,7 @@ const Addbook = () => {
                 <div className='col-span-3 border border-gray-200 rounded-xl p-4 shadow-sm bg-white flex flex-col items-center'>
                     <label htmlFor='image' className='block mb-2 text-sm text-gray-600 text-center'>Upload Image</label>
 
-                    <div className='w-24 h-36 md:w-48 md:h-72 border-2 rounded-md overflow-hidden flex items-center justify-center mb-2'>
+                    <div className='w-24 h-36 md:w-48 md:h-72 border shadow-2xl border-gray-300 rounded-md overflow-hidden flex items-center justify-center mb-2'>
                         {imagePreview ? (
                             <img src={imagePreview} alt="Thumbnail Preview" className='max-w-full max-h-full object-cover' />
                         ) : null}
@@ -110,7 +131,7 @@ const Addbook = () => {
             </div>
 
             {/* Section 2 */}
-            <div className='grid grid-cols-8 items-start lg:items-stretch gap-4 bg-[#F7F9FC] p-4 rounded-xl'>
+            <div className='grid grid-cols-8 items-start lg:items-stretch gap-4 bg-[#F0F6FF] border border-[#2F6FB2]/20 p-4 rounded-xl'>
                 {/* Left */}
                 <div className='col-span-5 border border-gray-200 rounded-xl p-4 shadow-sm bg-white'>
                     <h2 className='text-lg font-semibold mb-3'>Rating And Quantity</h2>
@@ -144,7 +165,7 @@ const Addbook = () => {
                         <option>Science</option>
                     </select>
 
-                    <button type="submit" className='mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded text-sm'>
+                    <button type="submit" className='mt-4 w-full bg-[#1E4E8C] text-white py-2 rounded text-sm'>
                         Add Category
                     </button>
                 </div>

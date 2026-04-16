@@ -1,7 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import BookCard from '../components/BookCard';
+import axios from 'axios';
 
 const Allbook = () => {
+
+  const [books, setBooks] = useState([])
+  useEffect(() => {
+    fetchAllBook();
+  },
+
+    [])
+
+  const fetchAllBook = async () => {
+
+    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/books`)
+    setBooks(data)
+  }
+  console.log(books)
   return (
     <div >
 
@@ -18,8 +33,10 @@ const Allbook = () => {
 
             <select className="border p-1 md:p-2 rounded text-xs md:text-sm">
               <option>Category</option>
-              <option>Novel</option>
-              <option>History</option>
+               <option value='Novel'>Novel</option>
+              <option value='Thriller'>Thriller</option>
+              <option value='History'>History</option>
+              <option value='Science'>Science</option>
             </select>
 
             <div className="flex text-xs md:text-sm">
@@ -51,14 +68,9 @@ const Allbook = () => {
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
 
-          <BookCard />
-          <BookCard />
-          <BookCard />
-          <BookCard />
-          <BookCard />
-          <BookCard />
-          <BookCard />
-          <BookCard />
+         {books.map( book=>(
+          <BookCard key={book._id} book={book}></BookCard>
+         ) )}
 
         </div>
 

@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tab, TabList, Tabs, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import BookCard from './BookCard';
+import axios from 'axios';
 
 const TabCategories = () => {
+
+    const [books, setBooks] = useState([])
+    useEffect(() => {
+        fetchAllBook();
+    },
+
+        [])
+
+    const fetchAllBook = async () => {
+
+        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/books`)
+        setBooks(data)
+    }
     return (
         <div className="container mx-auto px-6 pt-10">
 
@@ -28,35 +42,38 @@ const TabCategories = () => {
                 </div>
 
                 <TabPanel>
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                        <BookCard />
-                        <BookCard />
-                        <BookCard />
-                        <BookCard />
-                        <BookCard />
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-4 place-items-center">
+                        {books.filter(book => book.category === 'Novel')
+                            .map(book => (
+                                <BookCard key={book._id} book={book}></BookCard>
+                            ))}
                     </div>
                 </TabPanel>
 
                 <TabPanel>
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                        <BookCard />
-                        <BookCard />
-                        <BookCard />
+                        {books.filter(book => book.category === 'Thriller')
+                            .map(book => (
+                                <BookCard key={book._id} book={book}></BookCard>
+                            ))}
                     </div>
                 </TabPanel>
 
                 <TabPanel>
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                        <BookCard />
-                        <BookCard />
+                        {books.filter(book => book.category === 'History')
+                            .map(book => (
+                                <BookCard key={book._id} book={book}></BookCard>
+                            ))}
                     </div>
                 </TabPanel>
 
                 <TabPanel>
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                        <BookCard />
-                        <BookCard />
-                        <BookCard />
+                        {books.filter(book => book.category === 'Science')
+                            .map(book => (
+                                <BookCard key={book._id} book={book}></BookCard>
+                            ))}
                     </div>
                 </TabPanel>
 

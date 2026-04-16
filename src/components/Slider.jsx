@@ -16,9 +16,9 @@ const Slider = ({ image, text, subtext, button, activeIndex, slideIndex }) => {
 
             <div className="absolute inset-0 flex flex-col justify-center items-start sm:items-center text-left sm:text-center px-5">
 
-                {/* 🔥 ONE wrapper controls ALL animation */}
+        
                 <motion.div
-                    key={`${activeIndex}-${slideIndex}`}   // ✅ MAIN FIX
+                    key={`${activeIndex}-${slideIndex}`}  
                     initial={{ opacity: 0, scale: 2.1, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{

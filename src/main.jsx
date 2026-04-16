@@ -17,7 +17,7 @@ createRoot(document.getElementById('root')).render(
           toastOptions={{
             duration: 1000,
             style: {
-              background: '#0f172a',   // slate-900
+              background: '#0f172a', 
               color: '#fff',
               padding: '12px 16px',
               borderRadius: '10px',
@@ -25,7 +25,7 @@ createRoot(document.getElementById('root')).render(
             },
             success: {
               iconTheme: {
-                primary: '#22c55e', // green-500
+                primary: '#22c55e',
                 secondary: '#fff',
               },
             },
